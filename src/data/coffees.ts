@@ -36,7 +36,7 @@ export const coffees = [
     tags: ['tradicional', 'com leite'],
     name: 'Café com Leite',
     description: 'Meio a meio de expresso tradicional com leite vaporizado',
-    photo: 'leite.png',
+    photo: 'comLeite.png',
     price: 9.9,
   },
   {
@@ -71,7 +71,7 @@ export const coffees = [
     tags: ['tradicional', 'com leite'],
     name: 'Mocaccino',
     description: 'Café expresso com calda de chocolate, pouco leite e espuma',
-    photo: 'mocaccino.png',
+    photo: 'mochaccino.png',
     price: 9.9,
   },
   {
@@ -79,7 +79,7 @@ export const coffees = [
     tags: ['especial', 'com leite'],
     name: 'Chocolate Quente',
     description: 'Bebida feita com chocolate dissolvido no leite quente e café',
-    photo: 'chocolate.png',
+    photo: 'chocQuente.png',
     price: 9.9,
   },
   {

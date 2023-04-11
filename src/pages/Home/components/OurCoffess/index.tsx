@@ -9,8 +9,9 @@ import {
 
 import { ShoppingCart } from 'phosphor-react'
 import { useState } from 'react'
-import randomCoffeeImg from '../../../../assets/img/capuccino.png'
 import { QuantityInput } from '../../../../components/QuantityInput'
+import { coffees } from '../../../../data/coffees'
+import { formatPrice } from '../../../../utils/formatPrice'
 
 export function OurCoffees() {
   const [quantity, setQuantity] = useState(0)
@@ -28,7 +29,7 @@ export function OurCoffees() {
       <h2>Nossos Cafés</h2>
 
       <div>
-        <CoffeeCardContainer>
+        {/* <CoffeeCardContainer>
           <img src={randomCoffeeImg} alt="Imagem de uma chícara de Capuccino" />
           <Tags>
             <span>Tradicional</span>
@@ -55,7 +56,43 @@ export function OurCoffees() {
               </button>
             </AddCartWrapper>
           </CardFooter>
-        </CoffeeCardContainer>
+        </CoffeeCardContainer> */}
+
+        {coffees.map((coffee) => (
+          <CoffeeCardContainer key={coffee.id}>
+            <img
+              src={`/img/${coffee.photo}`}
+              alt={`Imagem de uma chícara de ${coffee.name}`}
+            />
+            <Tags>
+              {coffee.tags.map((tag) => (
+                <span key={`${coffee.id}${tag}`}>{tag}</span>
+              ))}
+            </Tags>
+            <span>{coffee.name}</span>
+            <p>{coffee.description}</p>
+
+            <CardFooter>
+              <PriceContainer>
+                <p>
+                  R$<strong>{formatPrice(coffee.price)}</strong>
+                </p>
+              </PriceContainer>
+
+              <AddCartWrapper>
+                <QuantityInput
+                  quantity={quantity}
+                  onIncresaseQuantity={handleIncreaseQuantity}
+                  onDecreaseQuantity={handleDecreaseQuantity}
+                />
+
+                <button>
+                  <ShoppingCart size={20} weight="fill" />
+                </button>
+              </AddCartWrapper>
+            </CardFooter>
+          </CoffeeCardContainer>
+        ))}
       </div>
     </OurCoffeesContainer>
   )

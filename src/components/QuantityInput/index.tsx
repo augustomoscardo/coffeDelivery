@@ -4,21 +4,21 @@ import { IconWrapper, QuantityInputContainer } from './styles'
 interface QuantityInputProps {
   quantity: number
   onIncresaseQuantity: () => void
-  onDecreaseQuantiy: () => void
+  onDecreaseQuantity: () => void
 }
 
 export function QuantityInput({
   quantity,
   onIncresaseQuantity,
-  onDecreaseQuantiy,
+  onDecreaseQuantity,
 }: QuantityInputProps) {
   return (
     <QuantityInputContainer>
-      <IconWrapper onClick={onDecreaseQuantiy} disabled={quantity < 1}>
+      <IconWrapper onClick={onDecreaseQuantity} disabled={quantity < 1}>
         <Minus size={14} weight="fill" />
       </IconWrapper>
 
-      <input type="number" readOnly value={quantity} />
+      <input type="number" readOnly value={quantity} max={99} />
 
       <IconWrapper onClick={onIncresaseQuantity}>
         <Plus size={14} weight="fill" />

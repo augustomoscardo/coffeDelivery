@@ -15,6 +15,7 @@ export const GlobalStyle = createGlobalStyle`
     background: ${(props) => props.theme['gray-100']};
     -webkit-font-smoothing: antialiased;
     max-width: 1440px;
+    margin: 0 auto;
   }
 
   body, input, textarea, button {
@@ -25,5 +26,9 @@ export const GlobalStyle = createGlobalStyle`
 
   a, button {
     cursor: pointer;
+  }
+
+  input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
   }
 `

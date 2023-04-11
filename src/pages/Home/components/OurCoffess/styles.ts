@@ -30,6 +30,7 @@ export const CoffeeCardContainer = styled.div`
   background: ${(props) => props.theme['gray-200']};
 
   img {
+    margin-top: -2.5rem;
     width: 7.5rem;
     height: 7.5rem;
     object-fit: cover;
