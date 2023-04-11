@@ -9,13 +9,12 @@ export const HeaderContainer = styled.header`
 
   > div {
     display: flex;
-    align-items: center;
     gap: 0.7rem;
   }
 
   .location {
     background: ${(props) => props.theme['purple-300']};
-    padding: 0.5rem 0.625rem;
+    padding: 0.5rem;
     border-radius: 6px;
 
     display: flex;
@@ -31,8 +30,10 @@ export const HeaderContainer = styled.header`
   .cartButton {
     background: ${(props) => props.theme['yellow-300']};
     color: ${(props) => props.theme['yellow-700']};
-    padding: 0.6rem;
+    padding: 0.5rem;
     border: 0;
     border-radius: 6px;
+    width: 2.375rem;
+    height: 2.375rem;
   }
 `

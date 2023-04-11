@@ -1,11 +1,12 @@
-import { Header } from '../../components/Header'
 import { Banner } from './components/Banner'
+import { OurCoffees } from './components/OurCoffess'
+import { HomeContainer } from './styles'
 
 export function Home() {
   return (
-    <div>
-      <Header />
+    <HomeContainer>
       <Banner />
-    </div>
+      <OurCoffees />
+    </HomeContainer>
   )
 }
