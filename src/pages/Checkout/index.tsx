@@ -1,18 +1,33 @@
-import { MapPinLine } from 'phosphor-react'
 import {
-  CheckouContainer,
+  Bank,
+  CreditCard,
+  CurrencyDollar,
+  MapPinLine,
+  Money,
+} from 'phosphor-react'
+import {
+  CEPInput,
+  CheckoutContainer,
   CheckoutFormContainer,
+  CityInput,
+  ComplementInput,
   Form,
   FormWrapper,
+  LocationNumberInput,
+  NeighborhoodInput,
+  Payment,
+  PaymentMethodInput,
   PaymentMethods,
   SelectedCoffeesWrapper,
+  StreetInput,
+  UFInput,
 } from './styles'
 
 export function Checkout() {
   return (
-    <CheckouContainer>
+    <CheckoutContainer>
       <CheckoutFormContainer>
-        <h2>Comlpete seu pedido</h2>
+        <h2>Complete seu pedido</h2>
 
         <FormWrapper>
           <div>
@@ -24,25 +39,25 @@ export function Checkout() {
           </div>
 
           <Form>
-            <input type="text" />
-            <input type="text" />
+            <CEPInput type="number" placeholder="CEP" />
+            <StreetInput type="text" placeholder="Rua" />
 
             <div>
-              <input type="text" />
-              <input type="text" />
+              <LocationNumberInput type="number" placeholder="Número" />
+              <ComplementInput type="text" placeholder="Complemento" />
             </div>
 
             <div>
-              <input type="text" />
-              <input type="text" />
-              <input type="text" />
+              <NeighborhoodInput type="text" placeholder="Bairro" />
+              <CityInput type="text" placeholder="Cidade" />
+              <UFInput type="text" placeholder="UF" />
             </div>
           </Form>
         </FormWrapper>
 
-        <PaymentMethods>
+        <Payment>
           <div>
-            <MapPinLine size={22} />
+            <CurrencyDollar size={22} />
             <div>
               <span>Pagamento</span>
               <p>
@@ -51,12 +66,38 @@ export function Checkout() {
             </div>
           </div>
 
-          <div>
-            <button type="button">Cartão de Crédito</button>
-            <button type="button">Cartão de Débito</button>
-            <button type="button">Dinheiro</button>
-          </div>
-        </PaymentMethods>
+          <PaymentMethods>
+            <PaymentMethodInput>
+              <input id="credito" type="radio" name="paymentMethod" />
+              <label htmlFor="credito">
+                <div>
+                  <CreditCard size={16} />
+                  <p>Cartão de Crédito</p>
+                </div>
+              </label>
+            </PaymentMethodInput>
+
+            <PaymentMethodInput>
+              <input id="debito" type="radio" name="paymentMethod" />
+              <label htmlFor="debito">
+                <div>
+                  <Bank size={16} />
+                  <p>Cartão de Débito</p>
+                </div>
+              </label>
+            </PaymentMethodInput>
+
+            <PaymentMethodInput>
+              <input id="dinheiro" type="radio" name="paymentMethod" />
+              <label htmlFor="dinheiro">
+                <div>
+                  <Money size={16} />
+                  <p>Dinheiro</p>
+                </div>
+              </label>
+            </PaymentMethodInput>
+          </PaymentMethods>
+        </Payment>
       </CheckoutFormContainer>
 
       <SelectedCoffeesWrapper>
@@ -64,6 +105,6 @@ export function Checkout() {
 
         <div></div>
       </SelectedCoffeesWrapper>
-    </CheckouContainer>
+    </CheckoutContainer>
   )
 }
