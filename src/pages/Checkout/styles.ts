@@ -5,7 +5,7 @@ export const CheckoutContainer = styled.main`
   padding: 6rem 10rem;
   display: flex;
   gap: 2rem;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
 
   h2 {
@@ -193,8 +193,10 @@ export const SelectedCoffeesContainer = styled.div`
   width: 28rem;
 
   > div {
+    width: 100%;
     background: ${(props) => props.theme['gray-200']};
     padding: 2.5rem;
+    margin-top: 1rem;
+    border-radius: 6px;
   }
 `
-export const CoffeCard = styled.div``

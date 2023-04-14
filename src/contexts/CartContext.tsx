@@ -59,12 +59,22 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
     const foundCoffee = cartItems.find((cartItem) => cartItem.id === cartItemId)
 
     if (foundCoffee) {
-      return type === 'increase'
-        ? foundCoffee.quantity + 1
-        : foundCoffee.quantity - 1
+      setCartItems((state) =>
+        state.map((cartItem) => {
+          if (cartItem.id === foundCoffee.id) {
+            return {
+              ...cartItem,
+              quantity:
+                type === 'increase'
+                  ? cartItem.quantity + 1
+                  : cartItem.quantity - 1,
+            }
+          } else {
+            return cartItem
+          }
+        }),
+      )
     }
-
-    return undefined
   }
 
   function removeCartItem(coffeId: number) {
