@@ -5,11 +5,15 @@ import {
   MapPinLine,
   Money,
 } from 'phosphor-react'
+import { useContext } from 'react'
+import { QuantityInput } from '../../components/QuantityInput'
+import { CartContext } from '../../contexts/CartContext'
 import {
   CEPInput,
   CheckoutContainer,
   CheckoutFormContainer,
   CityInput,
+  CoffeCard,
   ComplementInput,
   Form,
   FormWrapper,
@@ -18,12 +22,22 @@ import {
   Payment,
   PaymentMethodInput,
   PaymentMethods,
-  SelectedCoffeesWrapper,
+  SelectedCoffeesContainer,
   StreetInput,
   UFInput,
 } from './styles'
 
 export function Checkout() {
+  const { cartItems, changeCoffeCardQuantity } = useContext(CartContext)
+
+  function handleIncreaseCartItem(coffeId: number) {
+    changeCoffeCardQuantity(coffeId, 'increase')
+  }
+
+  function handleDecreaseCartItem(coffeId: number) {
+    changeCoffeCardQuantity(coffeId, 'decrease')
+  }
+
   return (
     <CheckoutContainer>
       <CheckoutFormContainer>
@@ -100,11 +114,30 @@ export function Checkout() {
         </Payment>
       </CheckoutFormContainer>
 
-      <SelectedCoffeesWrapper>
+      <SelectedCoffeesContainer>
         <h2>Cafés selecionados</h2>
 
-        <div></div>
-      </SelectedCoffeesWrapper>
+        <div>
+          {cartItems.map((item) => (
+            <CoffeCard key={item.id}>
+              <img src={item.photo} alt="" />
+
+              <div>
+                <p></p>
+
+                <div>
+                  <QuantityInput
+                    quantity={item.quantity}
+                    onIncresaseQuantity={handleIncreaseCartItem}
+                    onDecreaseQuantity={handleDecreaseCartItem}
+                  />
+                  <button>Remover</button>
+                </div>
+              </div>
+            </CoffeCard>
+          ))}
+        </div>
+      </SelectedCoffeesContainer>
     </CheckoutContainer>
   )
 }

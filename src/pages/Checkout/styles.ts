@@ -148,20 +148,53 @@ export const PaymentMethods = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 0.75rem;
+  margin-top: 2rem;
 
   input {
     visibility: hidden;
     appearance: none;
   }
+
+  /* input:checked + label div {
+    border: 1px solid ${(props) => props.theme['purple-500']};
+    &:hover {
+      background: ${(props) => props.theme['purple-300']};
+    }
+  } */
 `
 
-export const PaymentMethodInput = styled.div``
+export const PaymentMethodInput = styled.div`
+  input:checked + label {
+    border: 1px solid ${(props) => props.theme['purple-500']};
+    background: ${(props) => props.theme['purple-300']};
+  }
 
-export const SelectedCoffeesWrapper = styled.div`
+  label {
+    width: 11.25rem;
+    padding: 1rem;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    background: ${(props) => props.theme['gray-400']};
+
+    &:hover {
+      background: ${(props) => props.theme['purple-300']};
+    }
+
+    div {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      gap: 0.875rem;
+    }
+  }
+`
+
+export const SelectedCoffeesContainer = styled.div`
   width: 28rem;
 
-  div {
+  > div {
     background: ${(props) => props.theme['gray-200']};
     padding: 2.5rem;
   }
 `
+export const CoffeCard = styled.div``
