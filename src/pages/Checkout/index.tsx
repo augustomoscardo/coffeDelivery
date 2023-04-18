@@ -1,50 +1,23 @@
-import {
-  Bank,
-  CreditCard,
-  CurrencyDollar,
-  MapPinLine,
-  Money,
-} from 'phosphor-react'
-import { useContext } from 'react'
-import { useForm } from 'react-hook-form'
-import { CartContext } from '../../contexts/CartContext'
-import { formatPrice } from '../../utils/formatPrice'
-import { CoffeeCardInCart } from './components/CoffeeCardInCart'
-import {
-  CEPInput,
-  CheckoutContainer,
-  CheckoutFormContainer,
-  CityInput,
-  ComplementInput,
-  ConfirmOrderButton,
-  Form,
-  FormWrapper,
-  LocationNumberInput,
-  NeighborhoodInput,
-  Payment,
-  PaymentMethodInput,
-  PaymentMethods,
-  PriceWrapper,
-  SelectedCoffeesContainer,
-  StreetInput,
-  SummaryCart,
-  UFInput,
-} from './styles'
+import { CheckoutForm } from './components/CheckoutForm'
+import { SelectedCoffees } from './components/SelectedCoffees'
+import { CheckoutContainer } from './styles'
 
 export function Checkout() {
-  const { cartItems, cartTotalValue } = useContext(CartContext)
-  const { register, handleSubmit, watch, formState } = useForm()
+  // const { cartItems, cartTotalValue } = useContext(CartContext)
+  // const { register, handleSubmit, watch, formState } = useForm()
 
-  const deliveryTax = 3.5
-  const totalOrder = cartTotalValue + deliveryTax
+  // const deliveryTax = 3.5
+  // const totalOrder = cartTotalValue + deliveryTax
 
-  function handleCreateNewOrder(data: any) {
-    console.log('Novo pedido recedibo')
-  }
+  // function handleCreateNewOrder(data: any) {
+  //   console.log('Novo pedido recedibo')
+
+  //   redirect('/success')
+  // }
 
   return (
     <CheckoutContainer>
-      <CheckoutFormContainer>
+      {/* <CheckoutFormContainer>
         <h2>Complete seu pedido</h2>
 
         <FormWrapper>
@@ -140,9 +113,10 @@ export function Checkout() {
             </PaymentMethodInput>
           </PaymentMethods>
         </Payment>
-      </CheckoutFormContainer>
+      </CheckoutFormContainer> */}
+      <CheckoutForm />
 
-      <SelectedCoffeesContainer>
+      {/* <SelectedCoffeesContainer>
         <h2>Cafés selecionados</h2>
 
         <div>
@@ -171,7 +145,8 @@ export function Checkout() {
             </ConfirmOrderButton>
           </SummaryCart>
         </div>
-      </SelectedCoffeesContainer>
+      </SelectedCoffeesContainer> */}
+      <SelectedCoffees />
     </CheckoutContainer>
   )
 }

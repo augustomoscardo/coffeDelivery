@@ -93,7 +93,90 @@ export const UFInput = styled(BaseInput)`
   width: 3.75rem;
 `
 
-export const PaymentMethods = styled.div`
+export const Payment = styled.div`
   width: 100%;
   margin-top: 0.75rem;
+  padding: 2.5rem;
+  border-radius: 6px;
+  background: ${(props) => props.theme['gray-200']};
+
+  > div {
+    width: 100%;
+    display: flex;
+    /* align-items: center; */
+    gap: 0.5rem;
+
+    svg {
+      color: ${(props) => props.theme['purple-500']};
+    }
+
+    div {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.125rem;
+
+      span {
+        display: block;
+        line-height: 1.3;
+        color: ${(props) => props.theme['gray-800']};
+      }
+
+      p {
+        line-height: 1.3;
+        font-size: 0.875rem;
+        color: ${(props) => props.theme['gray-700']};
+      }
+    }
+  }
+`
+
+export const PaymentMethods = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 2rem;
+
+  input {
+    visibility: hidden;
+    appearance: none;
+  }
+`
+
+export const PaymentMethodInput = styled.div`
+  input:checked + label {
+    border: 1px solid ${(props) => props.theme['purple-500']};
+    background: ${(props) => props.theme['purple-300']};
+  }
+
+  label {
+    width: 11.25rem;
+    padding: 1rem;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    background: ${(props) => props.theme['gray-400']};
+
+    &:hover {
+      background: ${(props) => props.theme['gray-500']};
+    }
+
+    div {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      gap: 0.875rem;
+    }
+  }
+`
+
+export const InputControl = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+`
+
+export const ErrorMessage = styled.p`
+  color: ${(props) => props.theme['yellow-700']};
+  font-size: 0.75rem;
 `

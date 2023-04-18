@@ -2,13 +2,13 @@ import styled from 'styled-components'
 
 export const QuantityInputContainer = styled.div`
   background: ${(props) => props.theme['gray-400']};
-  flex: 1;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 4px;
   border-radius: 6px;
-  padding: 0.5rem;
+  padding: 0.35rem 0.5rem;
+  width: 4.5rem;
 
   input {
     text-align: center;

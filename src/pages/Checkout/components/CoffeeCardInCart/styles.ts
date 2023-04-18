@@ -4,6 +4,8 @@ export const CoffeCard = styled.div`
   width: 100%;
   height: 5rem;
   display: flex;
+  align-items: center;
+  gap: 1.25rem;
   padding-bottom: 1.5rem;
   margin-bottom: 1.5rem;
 
@@ -12,7 +14,6 @@ export const CoffeCard = styled.div`
   img {
     width: 4rem;
     height: 4rem;
-    margin-right: 1.25rem;
   }
 
   > div {
@@ -23,7 +24,9 @@ export const CoffeCard = styled.div`
   }
 
   p {
-    margin-left: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: ${(props) => props.theme['gray-800']};
+    line-height: 1.3;
   }
 `
 export const ButtonActionsContainer = styled.div`
