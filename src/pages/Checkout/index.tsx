@@ -6,7 +6,9 @@ import {
   Money,
 } from 'phosphor-react'
 import { useContext } from 'react'
+import { useForm } from 'react-hook-form'
 import { CartContext } from '../../contexts/CartContext'
+import { formatPrice } from '../../utils/formatPrice'
 import { CoffeeCardInCart } from './components/CoffeeCardInCart'
 import {
   CEPInput,
@@ -14,6 +16,7 @@ import {
   CheckoutFormContainer,
   CityInput,
   ComplementInput,
+  ConfirmOrderButton,
   Form,
   FormWrapper,
   LocationNumberInput,
@@ -21,13 +24,23 @@ import {
   Payment,
   PaymentMethodInput,
   PaymentMethods,
+  PriceWrapper,
   SelectedCoffeesContainer,
   StreetInput,
+  SummaryCart,
   UFInput,
 } from './styles'
 
 export function Checkout() {
-  const { cartItems } = useContext(CartContext)
+  const { cartItems, cartTotalValue } = useContext(CartContext)
+  const { register, handleSubmit, watch, formState } = useForm()
+
+  const deliveryTax = 3.5
+  const totalOrder = cartTotalValue + deliveryTax
+
+  function handleCreateNewOrder(data: any) {
+    console.log('Novo pedido recedibo')
+  }
 
   return (
     <CheckoutContainer>
@@ -43,19 +56,43 @@ export function Checkout() {
             </div>
           </div>
 
-          <Form>
-            <CEPInput type="number" placeholder="CEP" />
-            <StreetInput type="text" placeholder="Rua" />
+          <Form id="orderForm" onSubmit={handleSubmit(handleCreateNewOrder)}>
+            <CEPInput
+              type="number"
+              placeholder="CEP"
+              {...register('zipCode')}
+            />
+            <StreetInput
+              type="text"
+              placeholder="Rua"
+              {...register('street')}
+            />
 
             <div>
-              <LocationNumberInput type="number" placeholder="Número" />
-              <ComplementInput type="text" placeholder="Complemento" />
+              <LocationNumberInput
+                type="number"
+                placeholder="Número"
+                {...register('placeNumber')}
+              />
+              <ComplementInput
+                type="text"
+                placeholder="Complemento"
+                {...register('complement')}
+              />
             </div>
 
             <div>
-              <NeighborhoodInput type="text" placeholder="Bairro" />
-              <CityInput type="text" placeholder="Cidade" />
-              <UFInput type="text" placeholder="UF" />
+              <NeighborhoodInput
+                type="text"
+                placeholder="Bairro"
+                {...register('neighborhood')}
+              />
+              <CityInput
+                type="text"
+                placeholder="Cidade"
+                {...register('city')}
+              />
+              <UFInput type="text" placeholder="UF" {...register('uf')} />
             </div>
           </Form>
         </FormWrapper>
@@ -112,6 +149,27 @@ export function Checkout() {
           {cartItems.map((item) => (
             <CoffeeCardInCart key={item.id} coffee={item} />
           ))}
+
+          <SummaryCart>
+            <PriceWrapper>
+              <div>
+                <p>Total de Itens</p>
+                <p>R$ {formatPrice(cartTotalValue)}</p>
+              </div>
+              <div>
+                <p>Entrega</p>
+                <p>R$ {formatPrice(deliveryTax)}</p>
+              </div>
+              <div>
+                <p>Total</p>
+                <p>R$ {formatPrice(totalOrder)}</p>
+              </div>
+            </PriceWrapper>
+
+            <ConfirmOrderButton type="submit" form="orderForm">
+              Confirmar Pedido
+            </ConfirmOrderButton>
+          </SummaryCart>
         </div>
       </SelectedCoffeesContainer>
     </CheckoutContainer>

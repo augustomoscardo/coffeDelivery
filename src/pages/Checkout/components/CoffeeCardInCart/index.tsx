@@ -1,8 +1,9 @@
+import { Trash } from 'phosphor-react'
 import { useContext } from 'react'
 import { QuantityInput } from '../../../../components/QuantityInput'
 import { CartContext, CartItem } from '../../../../contexts/CartContext'
 import { formatPrice } from '../../../../utils/formatPrice'
-import { CoffeCard } from './styles'
+import { ButtonActionsContainer, CoffeCard, RemoveButton } from './styles'
 
 interface CoffeeCardInCartProps {
   coffee: CartItem
@@ -33,14 +34,17 @@ export function CoffeeCardInCart({ coffee }: CoffeeCardInCartProps) {
       <div>
         <p>{coffee.name}</p>
 
-        <div>
+        <ButtonActionsContainer>
           <QuantityInput
             quantity={coffee.quantity}
             onIncresaseQuantity={handleIncreaseCartItem}
             onDecreaseQuantity={handleDecreaseCartItem}
           />
-          <button onClick={handleRemoveCoffeFromCart}>Remover</button>
-        </div>
+          <RemoveButton onClick={handleRemoveCoffeFromCart}>
+            <Trash />
+            Remover
+          </RemoveButton>
+        </ButtonActionsContainer>
       </div>
 
       <p>R${formatPrice(coffee.price)}</p>
