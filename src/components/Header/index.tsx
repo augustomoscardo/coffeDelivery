@@ -20,7 +20,10 @@ export function Header() {
           <span>Taubaté, SP</span>
         </LocationWrapper>
 
-        <NavLink to={'/checkout'}>
+        <NavLink
+          to={cartQuantity > 0 ? '/checkout' : '/'}
+          aria-disabled={cartQuantity < 1}
+        >
           <CartButton type="button" className="cartButton">
             <ShoppingCart size={22} weight="fill" />
             {cartQuantity > 0 && <span>{cartQuantity}</span>}

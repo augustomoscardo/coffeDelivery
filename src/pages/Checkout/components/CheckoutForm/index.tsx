@@ -6,9 +6,11 @@ import {
   MapPinLine,
   Money,
 } from 'phosphor-react'
+import { useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import * as zod from 'zod'
+import { CartContext } from '../../../../contexts/CartContext'
 import {
   CEPInput,
   CheckoutFormContainer,
@@ -17,6 +19,7 @@ import {
   ErrorMessage,
   Form,
   FormWrapper,
+  InputBox,
   LocationNumberInput,
   NeighborhoodInput,
   Payment,
@@ -25,6 +28,12 @@ import {
   StreetInput,
   UFInput,
 } from './styles'
+
+const PaymentMethodsOptions = {
+  credit: 'crédito',
+  debit: 'débito',
+  money: 'dinheiro',
+}
 
 const newCoffeeOrderValidationSchema = zod.object({
   zipCode: zod
@@ -37,12 +46,20 @@ const newCoffeeOrderValidationSchema = zod.object({
   neighborhood: zod.string().min(10, 'Informe o bairro'),
   city: zod.string().min(1, 'Informe a cidade'),
   uf: zod.string().min(1, 'Informe o estado').max(2, 'Informe apenas a sigla'),
-  paymentMethod: zod.string(),
+  paymentMethod: zod.nativeEnum(PaymentMethodsOptions, {
+    errorMap: () => {
+      return { message: 'Escolha um método de pagamento.' }
+    },
+  }),
 })
 
 type NewCoffeeOrderData = zod.infer<typeof newCoffeeOrderValidationSchema>
 
+type OrderData = NewCoffeeOrderData
+
 export function CheckoutForm() {
+  const { clearCart } = useContext(CartContext)
+
   const {
     register,
     handleSubmit,
@@ -53,12 +70,13 @@ export function CheckoutForm() {
 
   const navigate = useNavigate()
 
-  function handleCreateNewOrder(data: any) {
-    console.log(data)
+  function handleCreateNewOrder(data: OrderData) {
+    navigate('/success', {
+      state: data,
+    })
 
-    navigate('/success')
+    clearCart()
   }
-  console.log(errors)
 
   return (
     <CheckoutFormContainer>
@@ -89,7 +107,7 @@ export function CheckoutForm() {
             <ErrorMessage>{errors.street?.message}</ErrorMessage>
           )}
 
-          <div>
+          <InputBox>
             <LocationNumberInput
               type="text"
               placeholder="Número"
@@ -106,26 +124,36 @@ export function CheckoutForm() {
             {errors.complement?.message && (
               <ErrorMessage>{errors.complement?.message}</ErrorMessage>
             )}
-          </div>
+          </InputBox>
 
-          <div>
-            <NeighborhoodInput
-              type="text"
-              placeholder="Bairro"
-              {...register('neighborhood')}
-            />
-            {errors.neighborhood?.message && (
-              <ErrorMessage>{errors.neighborhood?.message}</ErrorMessage>
-            )}
-            <CityInput type="text" placeholder="Cidade" {...register('city')} />
-            {errors.city?.message && (
-              <ErrorMessage>{errors.city?.message}</ErrorMessage>
-            )}
-            <UFInput type="text" placeholder="UF" {...register('uf')} />
-            {errors.uf?.message && (
-              <ErrorMessage>{errors.uf?.message}</ErrorMessage>
-            )}
-          </div>
+          <InputBox>
+            <div>
+              <NeighborhoodInput
+                type="text"
+                placeholder="Bairro"
+                {...register('neighborhood')}
+              />
+              {errors.neighborhood?.message && (
+                <ErrorMessage>{errors.neighborhood?.message}</ErrorMessage>
+              )}
+            </div>
+            <div>
+              <CityInput
+                type="text"
+                placeholder="Cidade"
+                {...register('city')}
+              />
+              {errors.city?.message && (
+                <ErrorMessage>{errors.city?.message}</ErrorMessage>
+              )}
+            </div>
+            <div>
+              <UFInput type="text" placeholder="UF" {...register('uf')} />
+              {errors.uf?.message && (
+                <ErrorMessage>{errors.uf?.message}</ErrorMessage>
+              )}
+            </div>
+          </InputBox>
         </Form>
       </FormWrapper>
 
@@ -186,6 +214,9 @@ export function CheckoutForm() {
             </label>
           </PaymentMethodInput>
         </PaymentMethods>
+        {errors.paymentMethod?.message && (
+          <ErrorMessage>{errors.paymentMethod?.message}</ErrorMessage>
+        )}
       </Payment>
     </CheckoutFormContainer>
   )

@@ -48,11 +48,31 @@ export const Form = styled.form`
   flex-direction: column;
   gap: 1rem;
   margin-top: 2rem;
+`
+
+export const InputBox = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 
   div {
     display: flex;
-    align-items: center;
-    gap: 0.75rem;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.25rem;
+
+    &:first-child {
+      width: 12.5rem;
+    }
+
+    &:nth-child(2) {
+      flex: 1;
+    }
+
+    &:last-child {
+      width: 3.75rem;
+    }
   }
 `
 
