@@ -12,21 +12,16 @@ import { useNavigate } from 'react-router-dom'
 import * as zod from 'zod'
 import { CartContext } from '../../../../contexts/CartContext'
 import {
-  CEPInput,
+  BaseInput,
   CheckoutFormContainer,
-  CityInput,
-  ComplementInput,
+  ComplementInputWrapper,
   ErrorMessage,
   Form,
   FormWrapper,
   InputBox,
-  LocationNumberInput,
-  NeighborhoodInput,
   Payment,
   PaymentMethodInput,
   PaymentMethods,
-  StreetInput,
-  UFInput,
 } from './styles'
 
 const PaymentMethodsOptions = {
@@ -55,7 +50,7 @@ const newCoffeeOrderValidationSchema = zod.object({
 
 type NewCoffeeOrderData = zod.infer<typeof newCoffeeOrderValidationSchema>
 
-type OrderData = NewCoffeeOrderData
+export type OrderData = NewCoffeeOrderData
 
 export function CheckoutForm() {
   const { clearCart } = useContext(CartContext)
@@ -64,6 +59,7 @@ export function CheckoutForm() {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm<NewCoffeeOrderData>({
     resolver: zodResolver(newCoffeeOrderValidationSchema),
   })
@@ -71,11 +67,28 @@ export function CheckoutForm() {
   const navigate = useNavigate()
 
   function handleCreateNewOrder(data: OrderData) {
+    console.log(data)
+
     navigate('/success', {
       state: data,
     })
 
     clearCart()
+  }
+
+  async function getAddress(zipCode: number) {
+    const getAddress = await fetch(
+      `https://viacep.com.br/ws/${zipCode}/json/`,
+    ).then((response) => response.json())
+
+    console.log(getAddress)
+
+    if (getAddress) {
+      setValue('street', getAddress.logradouro)
+      setValue('neighborhood', getAddress.bairro)
+      setValue('city', getAddress.localidade)
+      setValue('uf', getAddress.uf)
+    }
   }
 
   return (
@@ -92,35 +105,53 @@ export function CheckoutForm() {
         </div>
 
         <Form id="orderForm" onSubmit={handleSubmit(handleCreateNewOrder)}>
-          <CEPInput
-            type="text"
-            placeholder="CEP"
-            {...register('zipCode', {
-              required: 'Informe um CEP',
-            })}
-          />
-          {errors.zipCode?.message && (
-            <ErrorMessage>{errors.zipCode?.message}</ErrorMessage>
-          )}
-          <StreetInput type="text" placeholder="Rua" {...register('street')} />
-          {errors.street?.message && (
-            <ErrorMessage>{errors.street?.message}</ErrorMessage>
-          )}
+          <InputBox>
+            <BaseInput
+              type="text"
+              width="md"
+              placeholder="CEP"
+              {...register('zipCode', {
+                required: 'Informe um CEP',
+              })}
+              maxLength={9}
+              onBlur={(e) => getAddress(Number(e.target.value))}
+            />
+            {errors.zipCode?.message && (
+              <ErrorMessage>{errors.zipCode?.message}</ErrorMessage>
+            )}
+          </InputBox>
 
           <InputBox>
-            <LocationNumberInput
+            <BaseInput
               type="text"
+              width="lg"
+              placeholder="Rua"
+              {...register('street')}
+            />
+            {errors.street?.message && (
+              <ErrorMessage>{errors.street?.message}</ErrorMessage>
+            )}
+          </InputBox>
+
+          <InputBox>
+            <BaseInput
+              type="text"
+              width="md"
               placeholder="Número"
               {...register('locationNumber')}
             />
             {errors.locationNumber?.message && (
               <ErrorMessage>{errors.locationNumber?.message}</ErrorMessage>
             )}
-            <ComplementInput
-              type="text"
-              placeholder="Complemento"
-              {...register('complement')}
-            />
+            <ComplementInputWrapper>
+              <BaseInput
+                type="text"
+                width="lg"
+                placeholder="Complemento"
+                {...register('complement')}
+              />
+              <p>Opcional</p>
+            </ComplementInputWrapper>
             {errors.complement?.message && (
               <ErrorMessage>{errors.complement?.message}</ErrorMessage>
             )}
@@ -128,8 +159,9 @@ export function CheckoutForm() {
 
           <InputBox>
             <div>
-              <NeighborhoodInput
+              <BaseInput
                 type="text"
+                width="md"
                 placeholder="Bairro"
                 {...register('neighborhood')}
               />
@@ -138,8 +170,9 @@ export function CheckoutForm() {
               )}
             </div>
             <div>
-              <CityInput
+              <BaseInput
                 type="text"
+                width="lg"
                 placeholder="Cidade"
                 {...register('city')}
               />
@@ -148,7 +181,12 @@ export function CheckoutForm() {
               )}
             </div>
             <div>
-              <UFInput type="text" placeholder="UF" {...register('uf')} />
+              <BaseInput
+                type="text"
+                width="sm"
+                placeholder="UF"
+                {...register('uf')}
+              />
               {errors.uf?.message && (
                 <ErrorMessage>{errors.uf?.message}</ErrorMessage>
               )}

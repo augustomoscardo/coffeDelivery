@@ -56,7 +56,7 @@ export const InputBox = styled.div`
   align-items: center;
   gap: 0.75rem;
 
-  div {
+  > div {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -76,11 +76,24 @@ export const InputBox = styled.div`
   }
 `
 
-export const BaseInput = styled.input`
+type InputVariant = 'sm' | 'md' | 'lg'
+
+interface BaseInputProps {
+  width: InputVariant
+}
+
+const inputVariants = {
+  sm: '3.75rem',
+  md: '12.5rem',
+  lg: '100%',
+}
+
+export const BaseInput = styled.input<BaseInputProps>`
   padding: 0.75rem;
   border-radius: 4px;
   border: 1px solid ${(props) => props.theme['gray-400']};
   background-color: ${(props) => props.theme['gray-300']};
+  width: ${(props) => inputVariants[props.width]};
 
   &::-webkit-calendar-picker-indicator {
     display: none !important;
@@ -89,28 +102,29 @@ export const BaseInput = styled.input`
   &::placeholder {
     color: ${(props) => props.theme['gray-600']};
   }
+
+  &:focus {
+    border: 1px solid ${(props) => props.theme['yellow-700']};
+  }
 `
 
-export const CEPInput = styled(BaseInput)`
-  width: 12.5rem;
-`
-export const StreetInput = styled(BaseInput)`
-  flex: 1;
-`
-export const LocationNumberInput = styled(BaseInput)`
-  width: 12.5rem;
-`
-export const ComplementInput = styled(BaseInput)`
-  flex: 1;
-`
-export const NeighborhoodInput = styled(BaseInput)`
-  width: 12.5rem;
-`
-export const CityInput = styled(BaseInput)`
-  flex: 1;
-`
-export const UFInput = styled(BaseInput)`
-  width: 3.75rem;
+export const ComplementInputWrapper = styled.span`
+  width: 100%;
+  display: flex;
+  align-items: center;
+
+  border-radius: 0 4px 4px 0;
+  border: 1px solid ${(props) => props.theme['gray-400']};
+  border-left: none;
+  background-color: ${(props) => props.theme['gray-300']};
+
+  p {
+    font-style: italic;
+    font-size: 0.75rem;
+    padding: 0.75rem;
+
+    color: ${(props) => props.theme['gray-600']};
+  }
 `
 
 export const Payment = styled.div`
@@ -156,6 +170,7 @@ export const PaymentMethods = styled.div`
   justify-content: space-between;
   gap: 0.75rem;
   margin-top: 2rem;
+  margin-bottom: 0.25rem;
 
   input {
     visibility: hidden;
@@ -175,6 +190,7 @@ export const PaymentMethodInput = styled.div`
     border: 1px solid transparent;
     border-radius: 6px;
     background: ${(props) => props.theme['gray-400']};
+    cursor: pointer;
 
     &:hover {
       background: ${(props) => props.theme['gray-500']};

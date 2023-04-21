@@ -78,8 +78,8 @@ export function CoffeeCard({ coffee }: CoffeeCardProps) {
             onDecreaseQuantity={handleDecreaseQuantity}
           />
 
-          <button>
-            <ShoppingCart size={20} weight="fill" onClick={handleAddToCart} />
+          <button onClick={handleAddToCart}>
+            <ShoppingCart size={20} weight="fill" />
           </button>
         </AddCartWrapper>
       </CardFooter>

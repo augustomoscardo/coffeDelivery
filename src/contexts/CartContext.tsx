@@ -30,8 +30,6 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
     return acc + current.price * current.quantity
   }, 0)
 
-  console.log(cartTotalValue)
-
   function addCoffeeToCart(coffee: CartItem) {
     const isCoffeeAlreadyInCart = cartItems.find(
       (cartItem) => cartItem.id === coffee.id,
