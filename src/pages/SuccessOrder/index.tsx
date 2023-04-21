@@ -7,21 +7,19 @@ import { ConfirmMessageWrapper, OrderInfo, SuccessContainer } from './styles'
 import { useEffect } from 'react'
 import confirmIllustration from '../../assets/confirmIllustration.jpg'
 
-export function SuccessOrder(props: any) {
+export function SuccessOrder() {
   const location = useLocation()
   const navigate = useNavigate()
 
   const data: OrderData = location.state
 
-  console.log(data)
-
   useEffect(() => {
     if (!data) navigate('/')
-  })
+  }, [data, navigate])
 
   let paymentMethodChosen = ''
 
-  switch (data.paymentMethod) {
+  switch (data?.paymentMethod) {
     case 'débito':
       paymentMethodChosen = 'Cartão de Débito'
       break
@@ -41,41 +39,18 @@ export function SuccessOrder(props: any) {
 
       <section>
         <OrderInfo>
-          {/* <ItemInfo>
-          <MapPin weight="fill" size={16} />
-          <p>
-            Entrega em{' '}
-            <strong>{`${data.street}, ${data.locationNumber} - ${data.neighborhood} - ${data.city}, ${data.uf}`}</strong>
-          </p>
-        </ItemInfo> */}
           <OrderItemInfo
             icon={<MapPin weight="fill" size={16} />}
             variant="mediumPurple"
             regularText="Entrega em "
-            boldText={`${data.street}, ${data.locationNumber} - ${data.neighborhood} - ${data.city}, ${data.uf}`}
+            boldText={`${data?.street}, ${data?.locationNumber} - ${data?.neighborhood} - ${data?.city}, ${data?.uf}`}
           />
-
-          {/* <ItemInfo>
-          <Timer weight="fill" size={16} />
-          <p>
-            Previsão de entrega
-            <strong>20 min - 30 min</strong>
-          </p>
-        </ItemInfo> */}
           <OrderItemInfo
             icon={<Timer weight="fill" size={16} />}
             variant="mediumYellow"
             regularText="Previsão de entrega "
             boldText="20 min - 30 min"
           />
-
-          {/* <ItemInfo>
-          <CurrencyDollar weight="fill" size={16} />
-          <p>
-            Pagamento na Entrega
-            <strong>{paymentMethodChosen}</strong>
-          </p>
-        </ItemInfo> */}
           <OrderItemInfo
             icon={<CurrencyDollar weight="fill" size={16} />}
             variant="darkYellow"

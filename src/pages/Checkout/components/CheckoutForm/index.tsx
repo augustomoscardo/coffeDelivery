@@ -113,7 +113,7 @@ export function CheckoutForm() {
               {...register('zipCode', {
                 required: 'Informe um CEP',
               })}
-              maxLength={9}
+              maxLength={8}
               onBlur={(e) => getAddress(Number(e.target.value))}
             />
             {errors.zipCode?.message && (
@@ -140,9 +140,6 @@ export function CheckoutForm() {
               placeholder="Número"
               {...register('locationNumber')}
             />
-            {errors.locationNumber?.message && (
-              <ErrorMessage>{errors.locationNumber?.message}</ErrorMessage>
-            )}
             <ComplementInputWrapper>
               <BaseInput
                 type="text"
@@ -152,9 +149,6 @@ export function CheckoutForm() {
               />
               <p>Opcional</p>
             </ComplementInputWrapper>
-            {errors.complement?.message && (
-              <ErrorMessage>{errors.complement?.message}</ErrorMessage>
-            )}
           </InputBox>
 
           <InputBox>
